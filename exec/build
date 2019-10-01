@@ -1,2 +1,20 @@
 #!/bin/bash
-docker build -t 'apache2_base:1' ../
+
+ARGS=""
+
+while [ $# -gt 0 ]; do
+  case $1 in
+    MYSQL)
+      ARGS+=" --build-arg MYSQL=true"
+      ;;
+    PGSQL)
+      ARGS+=" --build-arg PGSQL=true"
+      ;;
+    *)
+      echo "unknown argument $1"
+      ;;
+  esac
+  shift
+done
+
+docker build -t 'apache2_base:1' $ARGS ../

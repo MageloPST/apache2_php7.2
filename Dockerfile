@@ -1,7 +1,7 @@
 FROM ubuntu:18.04
 
-ENV mysql=false
-ENV pgsql=false
+ARG MYSQL=false
+ARG PGSQL=false
 
 RUN export DEBIAN_FRONTEND=noninteractive && \
     apt-get update && \
@@ -19,14 +19,14 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
         php7.2-fpm \
         libapache2-mod-php7.2
 
-RUN if [ "$mysql" = false ]; then \
+RUN if [ "$MYSQL" = false ]; then \
         echo 'Skipping mysql configuration'; \
     else \
         apt-get install -y --no-install-recommends \
             php7.2-mysql; \
     fi
 
-RUN if [ "$pgsql" = false ]; then \
+RUN if [ "$PGSQL" = false ]; then \
         echo 'Skipping pgsql configuration'; \
     else \
         apt-get install -y --no-install-recommends \
