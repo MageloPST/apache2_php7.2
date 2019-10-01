@@ -1,0 +1,23 @@
+#!/bin/bash
+
+root_password=""
+user=""
+password=""
+database=""
+port=3306;
+
+if [ $# -gt 3 ]; then
+    root_password="$1"
+    user="$2"
+    password="$3"
+    database="$4"
+  else
+    echo "need to specify (root_password, user, password, database) in that specific order"
+    exit;
+fi
+
+if [ "$5" != "" ]; then
+  port=$5
+fi
+
+docker run --name=mariadb_server --restart=always -e MYSQL_ROOT_PASSWORD=$root_password MYSQL_USER=$user MYSQL_PASSWORD=$password MYSQL_DATABASE=$database  -p=$port:3306 -tdi mariadb
