@@ -35,13 +35,13 @@ RUN chmod 774 /etc/apache2/apache2.conf && \
     a2enmod headers && \
     a2enmod expires && \
     phpenmod opcache pdo calendar ctype exif fileinfo ftp gettext iconv \
-    json phar posix readline shmop sockets sysvmsg sysvsem sysvshm tokenizer mongodb && \
+    json phar posix readline shmop sockets sysvmsg sysvsem sysvshm tokenizer && \
     rm -rf /var/lib/apt/lists/* && \
     rm -rf /var/www/html/*
 
 ## ADD .htaccess and a nice phpinfo
-ADD /configuration/.htaccess /var/www/html
-ADD /configuration/phpinfo.php /var/www/html/
+#ADD /configuration/.htaccess /var/www/html
+#ADD /configuration/phpinfo.php /var/www/html/
 
 ## ADD default apache conf
 ADD /configuration/001-default.conf /etc/apache2/sites-available/
