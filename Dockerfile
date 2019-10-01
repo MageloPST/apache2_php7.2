@@ -30,7 +30,7 @@ RUN if [ "$pgsql" = false ]; then \
         echo 'Skipping pgsql configuration'; \
     else \
         apt-get install -y --no-install-recommends \
-            php7.2-pgsql
+            php7.2-pgsql \
     fi
 
 #### Install Apache configuration
