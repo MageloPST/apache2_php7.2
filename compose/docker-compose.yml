@@ -1,0 +1,16 @@
+version: '3.3'
+services:
+  server:
+    image: apache2_base:1
+    container_name: apache2_base
+    restart: always
+    volumes:
+      - log:/var/log/apache2/
+      - /var/www/html:/var/www/html
+    ports:
+      - "80:80"
+      - "443:443"
+    logging:
+       options:
+          max-size: "500m"
+          max-file: "5"
