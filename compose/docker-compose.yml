@@ -16,7 +16,7 @@ services:
           max-file: "5"
     networks:
       server_network:
-        ipv4_address: 172.18.0.1
+        ipv4_address: 172.18.0.2
 
 volumes:
   log:
