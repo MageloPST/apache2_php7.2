@@ -1,3 +1,4 @@
 #!/bin/bash
+docker volume create --name=log
 docker-compose pull --no-parallel
 docker-compose up
