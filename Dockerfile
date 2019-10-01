@@ -39,7 +39,14 @@ RUN chmod 774 /etc/apache2/apache2.conf && \
     rm -rf /var/lib/apt/lists/* && \
     rm -rf /var/www/html/*
 
-## ADD .htaccess
+## ADD .htaccess and a nice phpinfo
 ADD /configuration/.htaccess /var/www/html
+ADD /configuration/phpinfo.php /var/www/html/
+
+## ADD default apache conf
+ADD /configuration/001-default.conf /etc/apache2/sites-available/
+RUN a2ensite 001-default.conf
+
+EXPOSE 80
 
 CMD /usr/local/bin/apache2foreground
