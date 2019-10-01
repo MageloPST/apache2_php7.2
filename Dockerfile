@@ -1,5 +1,8 @@
 FROM ubuntu:18.04
 
+ENV mysql=false
+ENV pgsql=false
+
 RUN export DEBIAN_FRONTEND=noninteractive && \
     apt-get update && \
     apt-get install -y --no-install-recommends \
@@ -15,6 +18,20 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
         php7.2-curl \
         php7.2-fpm \
         libapache2-mod-php7.2
+
+RUN if [ "$mysql" = false ]; then \
+        echo 'Skipping mysql configuration'; \
+    else \
+        apt-get install -y --no-install-recommends \
+            php7.2-mysql
+    fi
+
+RUN if [ "$pgsql" = false ]; then \
+        echo 'Skipping pgsql configuration'; \
+    else \
+        apt-get install -y --no-install-recommends \
+            php7.2-pgsql
+    fi
 
 #### Install Apache configuration
 ADD /configuration/apache2foreground /usr/local/bin/apache2foreground
@@ -38,10 +55,6 @@ RUN chmod 774 /etc/apache2/apache2.conf && \
     json phar posix readline shmop sockets sysvmsg sysvsem sysvshm tokenizer && \
     rm -rf /var/lib/apt/lists/* && \
     rm -rf /var/www/html/*
-
-## ADD .htaccess and a nice phpinfo
-#ADD /configuration/.htaccess /var/www/html
-#ADD /configuration/phpinfo.php /var/www/html/
 
 ## ADD default apache conf
 ADD /configuration/001-default.conf /etc/apache2/sites-available/
