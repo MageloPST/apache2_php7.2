@@ -14,7 +14,13 @@ services:
        options:
           max-size: "500m"
           max-file: "5"
+    networks:
+      server_network:
+        ipv4_address: 172.18.0.1
 
 volumes:
   log:
+    external: true
+networks:
+  server_network:
     external: true
