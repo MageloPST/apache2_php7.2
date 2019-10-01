@@ -14,3 +14,7 @@ services:
        options:
           max-size: "500m"
           max-file: "5"
+
+volumes:
+  log:
+    external: true
