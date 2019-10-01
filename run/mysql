@@ -20,4 +20,4 @@ if [ "$5" != "" ]; then
   port=$5
 fi
 
-docker run --name=mariadb_server --restart=always -e MYSQL_ROOT_PASSWORD=$root_password MYSQL_USER=$user MYSQL_PASSWORD=$password MYSQL_DATABASE=$database  -p=$port:3306 -tdi mariadb
+docker run --name=mariadb_server --restart=always -e MYSQL_ROOT_PASSWORD=$root_password -e MYSQL_USER=$user -e MYSQL_PASSWORD=$password -e MYSQL_DATABASE=$database  -p=$port:3306 -tdi mariadb
