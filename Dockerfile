@@ -23,7 +23,7 @@ RUN if [ "$mysql" = false ]; then \
         echo 'Skipping mysql configuration'; \
     else \
         apt-get install -y --no-install-recommends \
-            php7.2-mysql
+            php7.2-mysql \
     fi
 
 RUN if [ "$pgsql" = false ]; then \
