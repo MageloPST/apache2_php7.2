@@ -1,4 +1,4 @@
 #!/bin/bash
 chown www-data:www-data -R /var/www
 find /var/www -type d -exec chmod 755 {} \;
-find /var/www -type f -exec chmod 644 {} \;
+find /var/www -type f -exec chmod 664 {} \;

@@ -1,0 +1,5 @@
+#!/bin/bash
+cp ./001-default.conf /etc/apache2/sites-available/
+docker-compose up -d
+docker exec -i apache2_base a2ensite 001-default.conf
+docker exec -i apache2_base service apache2 reload
