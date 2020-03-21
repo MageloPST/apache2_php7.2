@@ -7,6 +7,7 @@ services:
     volumes:
       - log:/var/log/apache2/
       - /etc/apache2/sites-available:/etc/apache2/sites-available
+      - /etc/ssl:/etc/ssl
       - /var/www/html:/var/www/html
     ports:
       - "80:80"
