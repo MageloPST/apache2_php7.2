@@ -58,5 +58,8 @@ RUN chmod 774 /etc/apache2/apache2.conf && \
     rm -rf /var/www/html/* /etc/apache2/sites-enabled/* && \
     rm -rf /etc/apache2/sites-enabled/*
 
+RUN a2ensite 001-default.conf
+
 WORKDIR /var/www/html
+EXPOSE 80
 CMD /usr/local/bin/apache2foreground
