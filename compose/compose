@@ -1,7 +1,7 @@
 #!/bin/bash
 set -o allexport
 source .env
-cp proxy.conf $PROXY_CONF
+cp proxy.conf $PROXY_CONF_DIR
 set +o allexport
 docker volume create --name=log
 docker-compose pull --no-parallel
