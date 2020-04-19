@@ -34,6 +34,7 @@ RUN if [ "$PGSQL" = false ]; then \
     fi
 
 #### Install Apache configuration
+COPY /configuration/001-default.conf /etc/apache2/sites-available/
 ADD /configuration/apache2foreground /usr/local/bin/apache2foreground
 ADD /configuration/phpfpm_start /usr/local/bin/phpfpm_start
 ADD /configuration/apache2.conf /etc/apache2/apache2.conf
@@ -54,8 +55,8 @@ RUN chmod 774 /etc/apache2/apache2.conf && \
     phpenmod opcache pdo calendar ctype exif fileinfo ftp gettext iconv \
     json phar posix readline shmop sockets sysvmsg sysvsem sysvshm tokenizer && \
     rm -rf /var/lib/apt/lists/* && \
-    rm -rf /var/www/html/*
+    rm -rf /var/www/html/* /etc/apache2/sites-enabled/* && \
+    rm -rf /etc/apache2/sites-enabled/*
 
-EXPOSE 80 443
-
+WORKDIR /var/www/html
 CMD /usr/local/bin/apache2foreground

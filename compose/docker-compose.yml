@@ -1,28 +1,57 @@
-version: '3.3'
+version: '3.7'
 services:
-  server:
+  nginx-reverse-proxy:
+    image: jrcs/letsencrypt-nginx-proxy-companion
+    container_name: nginx-proxy
+    restart: always
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ${CERTS_VOLUME}:/etc/nginx/certs:ro
+      - ${PROXY_CONF}:/etc/nginx/proxy.conf
+      - /etc/nginx/vhost.d
+      - /usr/share/nginx/html
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+    labels:
+      - "com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy=true"
+    networks:
+      - ngix-network
+  letsencrypt-proxy-companion:
+    image: jrcs/letsencrypt-nginx-proxy-companion
+    container_name: nginx-letsencrypt
+    volumes_from:
+      - nginx-reverse-proxy
+    depends_on:
+      - nginx-reverse-proxy
+    volumes:
+    - ${CERTS_VOLUME}:/etc/nginx/certs:rw
+    - /var/run/docker.sock:/var/run/docker.sock:ro
+    networks:
+      - ngix-network
+  main-server:
     image: apache2_base:1
-    container_name: apache2_base
+    container_name: main
     restart: always
     volumes:
       - log:/var/log/apache2/
-      - /etc/apache2/sites-available:/etc/apache2/sites-available
-      - /etc/ssl:/etc/ssl
-      - /var/www/html:/var/www/html
-    ports:
-      - "80:80"
-      - "443:443"
+      - ${WWW_HTML}:/var/www/html
+    environment:
+      - LETSENCRYPT_EMAIL=${LETSENCRYPT_EMAIL}
+      - LETSENCRYPT_HOST=${LETSENCRYPT_HOST}
+      - VIRTUAL_HOST=${VIRTUAL_HOST}
+    depends_on:
+      - nginx-reverse-proxy
     logging:
        options:
           max-size: "500m"
           max-file: "5"
     networks:
-      server_network:
-        ipv4_address: 172.18.0.2
+      ngix-network:
 
 volumes:
   log:
     external: true
 networks:
-  server_network:
+  ngix-network:
     external: true
