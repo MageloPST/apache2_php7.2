@@ -1,6 +1,8 @@
 #!/bin/bash
 set -o allexport
 source .env
+# sanitizing cdir
+PROXY_CONF_DIR=${PROXY_CONF_DIR//[^a-zA-Z0-9\/\-_]/}
 cp proxy.conf $PROXY_CONF_DIR
 set +o allexport
 docker volume create --name=log

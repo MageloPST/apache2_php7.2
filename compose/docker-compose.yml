@@ -9,7 +9,7 @@ services:
       - 443:443
     volumes:
       - ${CERTS_VOLUME}:/etc/nginx/certs:ro
-      - ${PROXY_CONF_DIR}/${PROXY_CONF_FILE}:/etc/nginx/proxy.conf
+      - ${PROXY_CONF_DIR}${PROXY_CONF_FILE}:/etc/nginx/proxy.conf
       - /etc/nginx/vhost.d
       - /usr/share/nginx/html
       - /var/run/docker.sock:/tmp/docker.sock:ro
